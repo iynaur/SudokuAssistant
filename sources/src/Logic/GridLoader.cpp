@@ -13,6 +13,8 @@
 #include <QFile>
 #include <QTextStream>
 #include <QString>
+#include <fstream>
+#include <sstream>
 
 namespace SudokuAssistant {
 namespace Logic {
@@ -46,6 +48,13 @@ Grid * GridLoader::getNewGridFromSave(const QString & path)
     {
         return nullptr;
     }
+
+    std::ifstream t(path.toStdString());
+    std::stringstream buffer;
+    buffer << t.rdbuf();
+    auto content = buffer.str();
+    grid->fromString(content);
+    return grid;
 
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))

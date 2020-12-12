@@ -9,9 +9,39 @@
 
 #include "Grid.h"
 #include <stdexcept>
+#include <sstream>
+using namespace std;
 
 namespace SudokuAssistant {
 namespace Model {
+
+void Grid::fromString(const string &data)
+{
+    stringstream ss;
+    ss<<data;
+    char c = 'x';
+    for (int i = 0; i < SIZE; ++i)
+    {
+        for (int j = 0; j < SIZE; ++j)
+        {
+            ss>>c;
+            while(c != ' ' && c != '-' && (c < '0' || c > '9') ){
+                ss>>c;
+            }
+            int val = 0;
+            if (c > '0' && c <= '9') val = c - '0';
+            if (val == 0)
+            {
+                _tab[i][j].readOnly = false;
+            }
+            else
+            {
+                _tab[i][j].readOnly = true;
+            }
+            _tab[i][j].value = val;
+        }
+    }
+}
 
 Grid::Grid(QStringList initList)
 {

@@ -25,7 +25,9 @@ class Grid : QObject
     friend QDataStream & operator<<(QDataStream & out, const Grid &);
     friend QDataStream & operator>>(QDataStream & in, Grid &);
 
+
 public:
+    void fromString(const std::string &data);
     const static int SIZE = 9;
 
     Grid() = default;
